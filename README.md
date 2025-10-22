@@ -1,8 +1,8 @@
-# Vite & HeroUI Template
+# Dashboard HeroUI
 
-This is a template for creating applications using Vite and HeroUI (v2).
+A modern dashboard application built with Vite and HeroUI (v2).
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/vite-template)
+🌐 **Live Demo**: [https://MaximInvent.github.io/dahsboard-hero-ui](https://MaximInvent.github.io/dahsboard-hero-ui)
 
 ## Technologies Used
 
@@ -45,6 +45,36 @@ public-hoist-pattern[]=*@heroui/*
 
 After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
 
+## Deployment
+
+This project is automatically deployed to GitHub Pages using GitHub Actions. The deployment happens automatically when you push to the `main` branch.
+
+### Manual Deployment (if needed)
+
+If you need to deploy manually, follow these steps:
+
+1. **Enable GitHub Pages** in your repository settings:
+   - Go to Settings → Pages
+   - Source: GitHub Actions
+
+2. **Push your changes** to the main branch:
+   ```bash
+   git add .
+   git commit -m "Update dashboard"
+   git push origin main
+   ```
+
+3. **Check the Actions tab** in your GitHub repository to see the deployment progress.
+
+### Troubleshooting
+
+If you encounter deployment issues:
+
+1. **Check GitHub Actions logs** in the Actions tab
+2. **Verify repository settings** - ensure Pages is enabled
+3. **Clear browser cache** when testing the deployed site
+4. **Check the base path** in `vite.config.ts` matches your repository name
+
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/vite-template/blob/main/LICENSE).
+Licensed under the [MIT license](https://github.com/MaximInvent/dahsboard-hero-ui/blob/main/LICENSE).
