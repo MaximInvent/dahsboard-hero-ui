@@ -1,81 +1,131 @@
 @import "tailwindcss";
+/* HeroUI styles are provided via the Tailwind plugin; no extra CSS import needed */
+/* Hero UI базовые стили (не требуется отдельный CSS импорт в v4) */
 
-/* Global CSS Variables for Dashboard UI */
-:root {
-  /* Brand Colors - Updated to match screenshots */
-  --color-primary: #007bff;
-  --color-primary-dark: #0056b3;
-  --color-secondary: #6c757d;
-  --color-accent: #28a745;
-  --color-warning: #ffc107;
-  --color-danger: #dc3545;
-  --color-darkblue: #111057;
-  
-  /* Chart and UI Colors */
-  --color-chart-grid: #e9ecef;
-  --color-chart-text: #6c757d;
-  --color-chart-border: #dee2e6;
-  --color-white: #ffffff;
-  
-  /* Activity Icons Colors */
+/* Tailwind v4 design tokens */
+@theme {
+  /* Primary scale */
+  --color-primary-50: #e3f2fd;
+  --color-primary-100: #bbdefb;
+  --color-primary-200: #90caf9;
+  --color-primary-300: #64b5f6;
+  --color-primary-400: #42a5f5;
+  --color-primary-500: #007bff;
+  --color-primary-600: #0056b3;
+  --color-primary-700: #004085;
+  --color-primary-800: #002a5c;
+  --color-primary-900: #001a3a;
+
+  /* Secondary scale */
+  --color-secondary-50: #f8f9fa;
+  --color-secondary-100: #e9ecef;
+  --color-secondary-200: #dee2e6;
+  --color-secondary-300: #ced4da;
+  --color-secondary-400: #adb5bd;
+  --color-secondary-500: #6c757d;
+  --color-secondary-600: #495057;
+  --color-secondary-700: #343a40;
+  --color-secondary-800: #212529;
+  --color-secondary-900: #171717;
+
+  /* Success scale */
+  --color-success-50: #d4edda;
+  --color-success-100: #c3e6cb;
+  --color-success-200: #91d5a3;
+  --color-success-300: #5cb85c;
+  --color-success-400: #28a745;
+  --color-success-500: #28a745;
+  --color-success-600: #218838;
+  --color-success-700: #1e7e34;
+  --color-success-800: #1c7430;
+  --color-success-900: #155724;
+
+  /* Warning scale */
+  --color-warning-50: #fff3cd;
+  --color-warning-100: #ffeaa7;
+  --color-warning-200: #fdcb6e;
+  --color-warning-300: #fdcb6e;
+  --color-warning-400: #ffc107;
+  --color-warning-500: #ffc107;
+  --color-warning-600: #e0a800;
+  --color-warning-700: #d39e00;
+  --color-warning-800: #c69500;
+  --color-warning-900: #b7791f;
+
+  /* Danger scale */
+  --color-danger-50: #f8d7da;
+  --color-danger-100: #f5c6cb;
+  --color-danger-200: #f1b0b7;
+  --color-danger-300: #ec9ca3;
+  --color-danger-400: #e87980;
+  --color-danger-500: #dc3545;
+  --color-danger-600: #c82333;
+  --color-danger-700: #bd2130;
+  --color-danger-800: #b21f2d;
+  --color-danger-900: #a71e2a;
+
+  /* Info scale */
+  --color-info-50: #cfe2ff;
+  --color-info-100: #b3d7ff;
+  --color-info-200: #80bfff;
+  --color-info-300: #4da6ff;
+  --color-info-400: #1a8cff;
+  --color-info-500: #0d6efd;
+  --color-info-600: #0b5ed7;
+  --color-info-700: #0a58ca;
+  --color-info-800: #084298;
+  --color-info-900: #052c65;
+
+  /* Darkblue custom scale */
+  --color-darkblue-50: #f0f2ff;
+  --color-darkblue-100: #e0e7ff;
+  --color-darkblue-200: #c7d2fe;
+  --color-darkblue-300: #a5b4fc;
+  --color-darkblue-400: #818cf8;
+  --color-darkblue-500: #111057;
+  --color-darkblue-600: #0e0d4a;
+  --color-darkblue-700: #0b0a3d;
+  --color-darkblue-800: #080730;
+  --color-darkblue-900: #050423;
+
+  /* Activity tokens */
   --color-activity-blue: #007bff;
   --color-activity-blue-bg: #e3f2fd;
   --color-activity-green: #28a745;
   --color-activity-green-bg: #d4edda;
   --color-activity-purple: #6f42c1;
   --color-activity-purple-bg: #e2d9f3;
-  
-  /* Quick Actions Colors */
+
+  /* Quick action tokens */
   --color-quick-purple: #5B32E5;
   --color-quick-teal: #20C997;
-  
-  /* Chart Colors */
+
+  /* Chart tokens */
+  --color-chart-grid: #e9ecef;
+  --color-chart-text: #6c757d;
+  --color-chart-border: #dee2e6;
   --color-chart-line: #4A6FEF;
-  
-  /* Status Colors */
-  --color-success: #28a745;
-  --color-success-bg: #d4edda;
-  --color-warning-text: #856404;
-  --color-warning-bg: #fff3cd;
-  --color-info: #0d6efd;
-  --color-info-bg: #cfe2ff;
-  
-  /* Neutral Colors */
-  --color-neutral-50: #f8f9fa;
-  --color-neutral-100: #e9ecef;
-  --color-neutral-200: #dee2e6;
-  --color-neutral-300: #ced4da;
-  --color-neutral-400: #adb5bd;
-  --color-neutral-500: #6c757d;
-  --color-neutral-600: #495057;
-  --color-neutral-700: #343a40;
-  --color-neutral-800: #212529;
-  --color-neutral-900: #171717;
-  
+}
+
+/* Dark theme overrides (minimal) */
+@theme .dark {
+  --color-primary-50: #001a3a;
+  --color-primary-100: #002a5c;
+  --color-primary-200: #004085;
+  --color-primary-300: #0056b3;
+  --color-primary-400: #007bff;
+  --color-primary-500: #42a5f5;
+  --color-primary-600: #64b5f6;
+  --color-primary-700: #90caf9;
+  --color-primary-800: #bbdefb;
+  --color-primary-900: #e3f2fd;
+}
+
+/* Global CSS Variables for Dashboard UI */
+:root {
   /* Typography */
   --font-primary: 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif';
   --font-display: 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif';
-  
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
-  
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  
-  /* Shadows - Updated to match screenshots */
-  --shadow-soft: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  --shadow-medium: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  --shadow-large: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 }
 
 /* Apply global font family */
@@ -92,6 +142,6 @@ html {
 
 /* Focus styles */
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #007bff;
   outline-offset: 2px;
 }

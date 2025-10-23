@@ -1,18 +1,28 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
-import { 
-  Users, 
-  DollarSign, 
-  TrendingUp, 
-  FileText, 
-  Plus, 
-  ArrowUpRight, 
-  Clock, 
-  UserPlus, 
-  Briefcase 
+import {
+  bigPurpleButton,
+  fullWidthPurpleButton,
+  fullWidthTealButton,
+  smallGhostButton,
+  defaultCard,
+  defaultCardHeader,
+  defaultCardBody
+} from "@/ui-kit";
+import {
+  Users,
+  DollarSign,
+  TrendingUp,
+  FileText,
+  Plus,
+  ArrowUpRight,
+  Clock,
+  UserPlus,
+  Briefcase
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Progress } from "@heroui/progress";
 
 interface DashboardPageProps {
   onNavigate?: (page: string) => void;
@@ -191,9 +201,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
             <p className="text-lg text-gray-600">{currentDate}</p>
           </div>
         <Button
-          className="text-white font-medium px-6 py-3 h-auto rounded-lg transition-all duration-200 hover:opacity-90"
-          style={{ backgroundColor: 'var(--color-quick-purple)' }}
-          size="lg"
+          className={bigPurpleButton}
           onPress={onStartProposal}
           startContent={<Plus className="w-5 h-5" />}
         >
@@ -203,11 +211,11 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
 
         {/* AUM Summary & Performance */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <Card className="border-0 bg-white shadow-md rounded-lg overflow-hidden">
-            <CardHeader className="pb-4 px-6 pt-6">
+          <Card className={defaultCard}>
+            <CardHeader className={defaultCardHeader}>
               <h3 className="text-lg font-semibold text-gray-900">Total AUM</h3>
             </CardHeader>
-            <CardBody className="pt-0 px-6 pb-6">
+            <CardBody className={defaultCardBody}>
               <div className="space-y-4">
                 <div className="text-3xl font-bold text-gray-900">$41.2M</div>
                 <div className="flex items-center gap-2 text-sm">
@@ -221,11 +229,11 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
             </CardBody>
           </Card>
 
-          <Card className="border-0 bg-white shadow-md rounded-lg overflow-hidden lg:col-span-2">
-            <CardHeader className="pb-4 px-6 pt-6">
+          <Card className={`${defaultCard} lg:col-span-2`}>
+            <CardHeader className={defaultCardHeader}>
               <h3 className="text-lg font-semibold text-gray-900">AUM Growth (6 Months)</h3>
             </CardHeader>
-            <CardBody className="pt-0 px-6 pb-6">
+            <CardBody className={defaultCardBody}>
               <ResponsiveContainer width="100%" height={120}>
                 <LineChart data={aumChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-chart-grid)" />
@@ -268,7 +276,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
           {keyMetrics.map((metric, index) => {
             const Icon = metric.icon;
             return (
-              <Card key={index} className="border-0 bg-white shadow-md rounded-lg overflow-hidden" style={{ height: "140px" }}>
+              <Card key={index} className={defaultCard} style={{ height: "140px" }}>
                 <CardBody className="p-6">
                   <div className="flex items-start justify-between h-full">
                     <div className="flex-1">
@@ -308,24 +316,22 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Active Proposals Widget */}
-          <Card className="border-0 bg-white shadow-md rounded-lg overflow-hidden lg:col-span-2">
-            <CardHeader className="pb-4 px-6 pt-6">
+          <Card className={`${defaultCard} lg:col-span-2`}>
+            <CardHeader className={defaultCardHeader}>
               <div className="flex items-center justify-between w-full">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900">Active Proposals</h3>
                   <p className="text-gray-600 mt-1 text-sm">Track progress on client proposals</p>
                 </div>
                 <Button
-                  className="text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:bg-gray-100 text-gray-600"
-                  variant="light"
-                  size="sm"
+                  className={smallGhostButton}
                   onPress={() => onNavigate?.("proposals")}
                 >
                   View All
                 </Button>
               </div>
             </CardHeader>
-            <CardBody className="pt-0 px-6 pb-6">
+            <CardBody className={defaultCardBody}>
               <div className="space-y-4">
                 {activeProposals.map((proposal) => (
                   <div
@@ -337,7 +343,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
                           <h4 className="text-base font-semibold text-gray-900">{proposal.name}</h4>
-                          <Chip 
+                          <Chip
                             className={`${
                               proposal.status === 'active' ? 'bg-green-100 text-green-800' :
                               proposal.status === 'review' ? 'bg-yellow-100 text-yellow-800' :
@@ -360,17 +366,9 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-600 font-medium">Progress</span>
-                        <span className="font-semibold" style={{ color: 'var(--color-darkblue)' }}>{proposal.progress}%</span>
+                        <span className="font-semibold text-darkblue-500">{proposal.progress}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="h-2 rounded-full transition-all duration-300"
-                          style={{ 
-                            width: `${proposal.progress}%`,
-                            backgroundColor: 'var(--color-darkblue)'
-                          }}
-                        ></div>
-                      </div>
+                      <Progress aria-label="Progress" value={proposal.progress}/>
                     </div>
                   </div>
                 ))}
@@ -381,29 +379,22 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
           {/* Priority Tasks & Quick Actions */}
           <div className="space-y-6">
             {/* Quick Actions Panel */}
-            <Card className="border-0 bg-white shadow-md rounded-lg overflow-hidden">
-              <CardHeader className="pb-4 px-6 pt-6">
+            <Card className={defaultCard}>
+              <CardHeader className={defaultCardHeader}>
                 <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
               </CardHeader>
-              <CardBody className="pt-0 px-6 pb-6 space-y-4">
+              <CardBody className={`${defaultCardBody} space-y-4`}>
                 <Button
+                  className={fullWidthPurpleButton}
                   onPress={onStartProposal}
-                  className="w-full justify-start text-white font-medium px-4 py-3 h-auto rounded-lg transition-all duration-200 hover:opacity-90"
-                  style={{ backgroundColor: 'var(--color-quick-purple)' }}
                   startContent={<Plus className="w-4 h-4" />}
                 >
                   New Proposal
                 </Button>
                 <Button
-                  variant="bordered"
+                  className={fullWidthTealButton}
                   onPress={() => onNavigate?.("clients")}
-                  className="w-full justify-start font-medium px-4 py-3 h-auto rounded-lg transition-all duration-200 border-1 hover:bg-teal-50"
-                  style={{ 
-                    borderColor: 'var(--color-quick-teal)',
-                    color: 'var(--color-quick-teal)',
-                    backgroundColor: 'transparent'
-                  }}
-                  startContent={<UserPlus className="w-4 h-4" style={{ color: 'var(--color-quick-teal)' }} />}
+                  startContent={<UserPlus className="w-4 h-4 text-quick-teal" />}
                 >
                   Add Client
                 </Button>
@@ -411,8 +402,8 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
             </Card>
 
             {/* Priority Tasks Widget */}
-            <Card className="border-0 bg-white shadow-md rounded-lg overflow-hidden">
-              <CardHeader className="pb-4 px-6 pt-6">
+            <Card className={defaultCard}>
+              <CardHeader className={defaultCardHeader}>
                 <div className="flex items-center justify-between w-full">
                   <h3 className="text-lg font-semibold text-gray-900">Priority Tasks</h3>
                   <div className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-semibold">
@@ -420,7 +411,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                   </div>
                 </div>
               </CardHeader>
-              <CardBody className="pt-0 px-6 pb-6">
+              <CardBody className={defaultCardBody}>
                 <div className="space-y-4">
                   {priorityTasks.map((task, index) => (
                     <div
@@ -449,23 +440,21 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
         </div>
 
         {/* Recent Activity Feed */}
-        <Card className="border-0 bg-white shadow-md rounded-lg overflow-hidden">
-          <CardHeader className="pb-4 px-6 pt-6">
+        <Card className={defaultCard}>
+          <CardHeader className={defaultCardHeader}>
             <div className="flex items-center justify-between w-full">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900">Recent Activity</h3>
                 <p className="text-gray-600 mt-1 text-sm">Latest updates from your practice</p>
               </div>
-              <Button 
-                variant="light" 
-                size="sm" 
-                className="text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:bg-gray-100 text-gray-600"
+              <Button
+                className={smallGhostButton}
               >
                 View All
               </Button>
             </div>
           </CardHeader>
-          <CardBody className="pt-0 px-6 pb-6">
+          <CardBody className={defaultCardBody}>
             <div className="space-y-4">
               {recentActivity.map((activity, index) => {
                 const Icon = activity.icon;
