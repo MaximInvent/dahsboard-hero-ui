@@ -429,7 +429,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                         />
                       }
                       endContent={
-                        <div className="flex min-w-[85px] items-center gap-1 text-sm text-gray-500">
+                        <div className="flex min-w-[85px] ml-auto justify-end items-center gap-1 text-sm text-gray-500">
                           <Clock className="w-3 h-3" />
                           <span className="font-medium">{task.dueDate}</span>
                         </div>
@@ -477,7 +477,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                         <Icon className="w-5 h-5" style={{ color: activity.iconColor }} />
                       </div>
                     }
-                    endContent={<span className="min-w-[85px] text-sm text-gray-500 font-medium">{activity.timestamp}</span>}
+                    endContent={<span className="flex min-w-[85px] text-sm text-gray-500 font-medium justify-end">{activity.timestamp}</span>}
                     description={activity.entity}
                   >
                     {activity.event}
