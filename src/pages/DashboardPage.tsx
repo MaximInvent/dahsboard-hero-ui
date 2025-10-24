@@ -8,7 +8,7 @@ import {
   smallGhostButton,
   defaultCard,
   defaultCardHeader,
-  defaultCardBody
+  defaultCardBody, DefaultListBoxItem, DefaultListBox
 } from "@/ui-kit";
 import {
   Users,
@@ -23,6 +23,10 @@ import {
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Progress } from "@heroui/progress";
+import { Listbox, ListboxItem } from "@heroui/listbox";
+import {
+  statusChip
+} from "@/ui-kit";
 
 interface DashboardPageProps {
   onNavigate?: (page: string) => void;
@@ -332,47 +336,38 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
               </div>
             </CardHeader>
             <CardBody className={defaultCardBody}>
-              <div className="space-y-4">
+              <Listbox aria-label="Active Proposals" classNames={DefaultListBox}>
                 {activeProposals.map((proposal) => (
-                  <div
+                  <ListboxItem
                     key={proposal.id}
-                    className="p-5 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-200 cursor-pointer border border-gray-100"
+                    textValue={proposal.name}
+                    classNames={DefaultListBoxItem}
+                    endContent={<span className="text-sm text-gray-500">{proposal.lastUpdated}</span>}
                     onClick={() => onNavigate?.("proposals")}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-3">
-                          <h4 className="text-base font-semibold text-gray-900">{proposal.name}</h4>
-                          <Chip
-                            className={`${
-                              proposal.status === 'active' ? 'bg-green-100 text-green-800' :
-                              proposal.status === 'review' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-blue-100 text-blue-800'
-                            } font-medium text-xs px-2 py-1 rounded-full`}
-                            size="sm"
-                            variant="flat"
-                          >
-                            {getStatusLabel(proposal.status)}
-                          </Chip>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <span className="font-mono text-gray-900 font-medium">{proposal.id}</span>
-                          <span>•</span>
-                          <span className="font-semibold">{proposal.aum}</span>
-                        </div>
+                    description={
+                      <div className="flex items-center gap-3 text-sm text-gray-600">
+                        <span className="font-mono text-gray-900 font-medium">{proposal.id}</span>
+                        <span>•</span>
+                        <span className="font-semibold">{proposal.aum}</span>
                       </div>
-                      <span className="text-sm text-gray-500">{proposal.lastUpdated}</span>
+                    }
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <h4 className="text-base font-semibold text-gray-900">{proposal.name}</h4>
+                      <Chip className={statusChip({ tone: proposal.status as any })} size="sm" variant="flat">
+                        {getStatusLabel(proposal.status)}
+                      </Chip>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-600 font-medium">Progress</span>
                         <span className="font-semibold text-darkblue-500">{proposal.progress}%</span>
                       </div>
-                      <Progress aria-label="Progress" value={proposal.progress}/>
+                      <Progress aria-label="Progress" value={proposal.progress} size="sm" className="text-darkblue-500" classNames={{ track: "h-2", indicator: "h-2" }} />
                     </div>
-                  </div>
+                  </ListboxItem>
                 ))}
-              </div>
+              </Listbox>
             </CardBody>
           </Card>
 
@@ -412,28 +407,34 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                 </div>
               </CardHeader>
               <CardBody className={defaultCardBody}>
-                <div className="space-y-4">
+                <Listbox
+                  aria-label="Priority Tasks"
+                  classNames={DefaultListBox}
+                >
                   {priorityTasks.map((task, index) => (
-                    <div
+                    <ListboxItem
                       key={index}
-                      className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-200 cursor-pointer border border-gray-100"
+                      textValue={task.title}
+                      classNames={DefaultListBoxItem}
+                      startContent={
+                        <div
+                          className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                            task.priority === 'high' ? 'bg-red-500' : 'bg-yellow-500'
+                          }`}
+                        />
+                      }
+                      endContent={
+                        <div className="flex items-center gap-1 text-sm text-gray-500">
+                          <Clock className="w-3 h-3" />
+                          <span className="font-medium">{task.dueDate}</span>
+                        </div>
+                      }
+                      description={task.client}
                     >
-                      <div
-                        className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                          task.priority === 'high' ? 'bg-red-500' : 'bg-yellow-500'
-                        }`}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 mb-2">{task.title}</p>
-                        <p className="text-sm text-gray-600">{task.client}</p>
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-gray-500 flex-shrink-0">
-                        <Clock className="w-3 h-3" />
-                        <span className="font-medium">{task.dueDate}</span>
-                      </div>
-                    </div>
+                      {task.title}
+                    </ListboxItem>
                   ))}
-                </div>
+                </Listbox>
               </CardBody>
             </Card>
           </div>
@@ -455,23 +456,30 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
             </div>
           </CardHeader>
           <CardBody className={defaultCardBody}>
-            <div className="space-y-4">
+            <Listbox
+              aria-label="Recent Activity"
+              classNames={DefaultListBox}
+            >
               {recentActivity.map((activity, index) => {
                 const Icon = activity.icon;
                 return (
-                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-200 cursor-pointer border border-gray-100">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100">
-                      <Icon className="w-5 h-5" style={{ color: activity.iconColor }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 mb-2">{activity.event}</p>
-                      <p className="text-sm text-gray-600">{activity.entity}</p>
-                    </div>
-                    <span className="text-sm text-gray-500 flex-shrink-0 font-medium">{activity.timestamp}</span>
-                  </div>
+                  <ListboxItem
+                    key={index}
+                    textValue={activity.event}
+                    classNames={DefaultListBoxItem}
+                    startContent={
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100">
+                        <Icon className="w-5 h-5" style={{ color: activity.iconColor }} />
+                      </div>
+                    }
+                    endContent={<span className="text-sm text-gray-500 font-medium">{activity.timestamp}</span>}
+                    description={activity.entity}
+                  >
+                    {activity.event}
+                  </ListboxItem>
                 );
               })}
-            </div>
+            </Listbox>
           </CardBody>
         </Card>
       </div>
