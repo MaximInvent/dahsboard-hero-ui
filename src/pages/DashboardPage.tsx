@@ -342,7 +342,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                     key={proposal.id}
                     textValue={proposal.name}
                     classNames={DefaultListBoxItem}
-                    endContent={<span className="text-sm text-gray-500">{proposal.lastUpdated}</span>}
+                    /*endContent={<span className="text-sm text-gray-500">{proposal.lastUpdated}</span>}*/
                     onClick={() => onNavigate?.("proposals")}
                     description={
                       <div className="flex items-center gap-3 text-sm text-gray-600">
@@ -352,11 +352,16 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                       </div>
                     }
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <h4 className="text-base font-semibold text-gray-900">{proposal.name}</h4>
-                      <Chip className={statusChip({ tone: proposal.status as any })} size="sm" variant="flat">
-                        {getStatusLabel(proposal.status)}
-                      </Chip>
+                    <div className="grid grid-cols-2 items-center gap-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <h4 className="text-base font-semibold text-gray-900">{proposal.name}</h4>
+                        <Chip className={statusChip({ tone: proposal.status as any })} size="sm" variant="flat">
+                          {getStatusLabel(proposal.status)}
+                        </Chip>
+                      </div>
+                      <span className="justify-self-end text-sm text-gray-500 font-normal">
+                        {proposal.lastUpdated}
+                      </span>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
@@ -424,7 +429,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                         />
                       }
                       endContent={
-                        <div className="flex items-center gap-1 text-sm text-gray-500">
+                        <div className="flex min-w-[85px] items-center gap-1 text-sm text-gray-500">
                           <Clock className="w-3 h-3" />
                           <span className="font-medium">{task.dueDate}</span>
                         </div>
@@ -472,7 +477,7 @@ export function DashboardPage({ onNavigate, onStartProposal, advisorName }: Dash
                         <Icon className="w-5 h-5" style={{ color: activity.iconColor }} />
                       </div>
                     }
-                    endContent={<span className="text-sm text-gray-500 font-medium">{activity.timestamp}</span>}
+                    endContent={<span className="min-w-[85px] text-sm text-gray-500 font-medium">{activity.timestamp}</span>}
                     description={activity.entity}
                   >
                     {activity.event}
